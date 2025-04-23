@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:background="#BBDEFB"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/planImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/planDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have participated in this event"
+        android:paddingStart="16dp" />
+</LinearLayout>

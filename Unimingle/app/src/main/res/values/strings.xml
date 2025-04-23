@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UniMingle</string>
+    <string name="welcome_to_unimingle">Welcome To UniMingle</string>
+    <string name="unimingle_subtext">Step into a world of new friendships and meaningful connections</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_university_id">University ID</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="login_page">LOGIN PAGE</string>
+    <string name="hint_username">Username</string>
+    <string name="login_btn">Log In</string>
+
+    <string name="chat_button">Chat</string>
+    <string name="events_button">Events</string>
+    <string name="groups_button">Groups</string>
+    <string name="map_button">Map</string>
+    <string name="planner_button">Planner</string>
+</resources>

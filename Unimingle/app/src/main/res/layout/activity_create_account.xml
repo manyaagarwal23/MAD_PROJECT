@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="#000000">
+
+    <TextView
+        android:text="@string/welcome_to_unimingle"
+        android:textSize="22sp"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"  android:layout_height="80dp"
+        android:layout_width="130dp"/>
+
+    <TextView
+        android:layout_width="190dp"
+        android:layout_height="59dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:text="@string/unimingle_subtext"
+        android:textAlignment="center"
+        android:textColor="#A3D900" />
+    <EditText
+        android:id="@+id/fullName"
+        android:hint="@string/hint_full_name"
+        android:background="@drawable/edittext_bg"
+        android:textColorHint="#AAA"
+        android:textColor="#FFF"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/universityId"
+        android:hint="@string/hint_university_id"
+        android:background="@drawable/edittext_bg"
+        android:textColorHint="#AAA"
+        android:textColor="#FFF"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/password"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:background="@drawable/edittext_bg"
+        android:textColorHint="#AAA"
+        android:textColor="#FFF"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/confirmPassword"
+        android:hint="@string/hint_confirm_password"
+        android:inputType="textPassword"
+        android:background="@drawable/edittext_bg"
+        android:textColorHint="#AAA"
+        android:textColor="#FFF"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/signupBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        android:text="@string/sign_up"
+        android:textColor="#000000" />
+</LinearLayout>
+

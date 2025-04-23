@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "880009523697",
+    "firebase_url": "https://unimingle-fb5cd-default-rtdb.firebaseio.com",
+    "project_id": "unimingle-fb5cd",
+    "storage_bucket": "unimingle-fb5cd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880009523697:android:dc83e968b5c5f819835450",
+        "android_client_info": {
+          "package_name": "com.example.unimingle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880009523697-idfnr3bc7eiot1fbto1b8c3956eohlqm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.unimingle",
+            "certificate_hash": "83fde4f2f950d3ff45b6a90b5969624d0696baf6"
+          }
+        },
+        {
+          "client_id": "880009523697-5fll6bvnlpg3ip5tp5bn09j5mibi0gbi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKah8X_Zm6jjxdr4W-GoYO5Hj1QxuP_Mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880009523697-5fll6bvnlpg3ip5tp5bn09j5mibi0gbi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
