@@ -1,75 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
     android:background="#000000">
 
-    <TextView
-        android:text="@string/welcome_to_unimingle"
-        android:textSize="22sp"
-        android:textColor="#FFFFFF"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"  android:layout_height="80dp"
-        android:layout_width="130dp"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:layout_width="190dp"
-        android:layout_height="59dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="@string/unimingle_subtext"
-        android:textAlignment="center"
-        android:textColor="#A3D900" />
-    <EditText
-        android:id="@+id/fullName"
-        android:hint="@string/hint_full_name"
-        android:background="@drawable/edittext_bg"
-        android:textColorHint="#AAA"
-        android:textColor="#FFF"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="serif"
+            android:text="@string/welcome_to_unimingle"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp" />
 
-    <EditText
-        android:id="@+id/universityId"
-        android:hint="@string/hint_university_id"
-        android:background="@drawable/edittext_bg"
-        android:textColorHint="#AAA"
-        android:textColor="#FFF"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="serif"
+            android:text="@string/unimingle_subtext"
+            android:textAlignment="center"
+            android:textColor="#D4AF37"
+            android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/password"
-        android:hint="@string/hint_password"
-        android:inputType="textPassword"
-        android:background="@drawable/edittext_bg"
-        android:textColorHint="#AAA"
-        android:textColor="#FFF"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <!-- Full Name Input -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
 
-    <EditText
-        android:id="@+id/confirmPassword"
-        android:hint="@string/hint_confirm_password"
-        android:inputType="textPassword"
-        android:background="@drawable/edittext_bg"
-        android:textColorHint="#AAA"
-        android:textColor="#FFF"
-        android:layout_marginBottom="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/fullNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/hint_full_name"
+                android:inputType="textPersonName"
+                android:padding="16dp"
+                android:textColor="#757575"
+                android:textColorHint="#AAAAAA"
+                android:textSize="16sp" />
+        </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/signupBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FFFFFF"
-        android:text="@string/sign_up"
-        android:textColor="#000000" />
-</LinearLayout>
+        <!-- University ID Input -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
 
+            <EditText
+                android:id="@+id/universityIDEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/hint_university_id"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textColor="#757575"
+                android:textColorHint="#AAAAAA"
+                android:textSize="16sp" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Password Input -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textColor="#757575"
+                android:textColorHint="#AAAAAA"
+                android:textSize="16sp" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Confirm Password Input -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
+            <EditText
+                android:id="@+id/confirmPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/hint_confirm_password"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textColor="#757575"
+                android:textColorHint="#AAAAAA"
+                android:textSize="16sp" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Terms and Conditions Text -->
+        <TextView
+            android:id="@+id/termsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="@string/terms_conditions"
+            android:textColor="#AAAAAA"
+            android:textSize="12sp" />
+
+        <!-- Sign Up and Login Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/signupBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFFFFF"
+                android:paddingStart="32dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="32dp"
+                android:paddingBottom="12dp"
+                android:text="@string/sign_up"
+                android:textColor="#333333"
+                app:cornerRadius="24dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/haveAccountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/have_account"
+                android:textColor="#DDDDDD"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

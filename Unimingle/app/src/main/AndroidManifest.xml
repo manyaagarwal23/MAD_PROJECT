@@ -4,7 +4,10 @@
     package="com.example.unimingle">
 
     <!-- Permissions -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -24,7 +27,7 @@
         android:theme="@style/Theme.Unimingle"
         tools:targetApi="31">
 
-        <!-- Start Page (Launcher) -->
+        <!-- Main Launcher Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -34,16 +37,25 @@
             </intent-filter>
         </activity>
 
-        <!-- Authentication Activities -->
+        <!-- Authentication -->
         <activity android:name=".CreateAccountActivity" android:exported="false" />
         <activity android:name=".LoginActivity" android:exported="false" />
 
-        <!-- Home Activity (Accessible after login) -->
+        <!-- Home -->
         <activity android:name=".HomeActivity" android:exported="false" />
 
-        <!-- Plans-related Activities -->
+        <!-- Plan-related -->
         <activity android:name=".PlansActivity" android:exported="false" />
         <activity android:name=".CreatePlanActivity" android:exported="false" />
+
+        <!-- Profile -->
+        <activity android:name=".UserProfileActivity" android:exported="false" />
+        <activity android:name=".ProfileActivity" android:exported="false" />
+
+        <!-- Event Details -->
+        <activity android:name=".EventDetailsActivity"
+            android:exported="false"
+            tools:ignore="DuplicateActivity" />
 
     </application>
 

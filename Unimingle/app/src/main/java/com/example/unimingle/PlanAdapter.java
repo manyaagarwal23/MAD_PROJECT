@@ -32,7 +32,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
     public void onBindViewHolder(@NonNull PlanViewHolder holder, int position) {
         Plan plan = planList.get(position);
         holder.description.setText("You have participated in this event");
-        Picasso.get().load(plan.imageUrl).into(holder.image); // You need to add Picasso lib
+        Picasso.get().load(plan.imageUrl).into(holder.image);
+        // You need to add Picasso lib
     }
 
     @Override
@@ -40,14 +41,15 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
         return planList.size();
     }
 
+
     public static class PlanViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView description;
 
         public PlanViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.planImage);
-            description = itemView.findViewById(R.id.planDesc);
+            image = itemView.findViewById(R.id.btn_planner);
+            description = itemView.findViewById(R.id.eventDesc);
         }
     }
 }

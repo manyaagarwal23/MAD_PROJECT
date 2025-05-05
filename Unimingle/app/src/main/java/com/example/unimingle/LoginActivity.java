@@ -26,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Initialize views
-        emailField = findViewById(R.id.fullName);  // Assuming fullName is the email input field
-        passwordField = findViewById(R.id.password);
+        emailField = findViewById(R.id.loginUsername);  // Assuming fullName is the email input field
+        passwordField = findViewById(R.id.loginPassword);
         loginBtn = findViewById(R.id.loginBtn);
 
         // Check if the user is already logged in when the activity starts
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Successful login
                             FirebaseUser user = mAuth.getCurrentUser();
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                            finish();  // Close the login activity
+//                            finish();  // Close the login activity
                         } else {
                             // Handle login failure
                             Toast.makeText(LoginActivity.this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();

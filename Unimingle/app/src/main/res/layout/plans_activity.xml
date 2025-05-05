@@ -25,19 +25,22 @@
             android:id="@+id/allBtn"
             android:text="All"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:backgroundTint="@color/turqoise"/>
 
         <Button
             android:id="@+id/hostedBtn"
             android:text="Hosted"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:backgroundTint="@color/turqoise"/>
 
         <Button
             android:id="@+id/attendingBtn"
             android:text="Attending"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:backgroundTint="@color/turqoise"/>
     </LinearLayout>
 
     <!-- RecyclerView for plan cards -->
