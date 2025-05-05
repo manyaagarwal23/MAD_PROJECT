@@ -2,12 +2,16 @@ package com.example.unimingle;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.ImageButton;
+import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,9 +22,12 @@ import java.util.Map;
 
 public class CreatePlanActivity extends AppCompatActivity {
 
-    EditText etEventName, etSlots, etDate, etTime, etLocation, etDetails;
-    Button btnCreate, btnUpload;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    EditText etEventName, etSlots, etDate, etDescription, etTime, etLocation;
+    Button btnCreatePlan;
     DatabaseReference databasePlans;
+    private Uri imageUri = null;
+    ImageButton btnUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +37,43 @@ public class CreatePlanActivity extends AppCompatActivity {
         // Firebase reference
         databasePlans = FirebaseDatabase.getInstance().getReference("plans");
 
+        // Log current user UID
+        if (com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser() != null) {
+            String uid = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();
+            Log.d("CreatePlanActivity", "Current user UID: " + uid);
+        } else {
+            Log.d("CreatePlanActivity", "No user logged in!");
+        }
+
+        // Test write to plans node
+        databasePlans.push().setValue("test_write")
+            .addOnSuccessListener(aVoid -> Toast.makeText(this, "Test write success", Toast.LENGTH_SHORT).show())
+            .addOnFailureListener(e -> Toast.makeText(this, "Test write failed: " + e.getMessage(), Toast.LENGTH_LONG).show());
+
         // Link views
         etEventName = findViewById(R.id.etEventName);
         etSlots = findViewById(R.id.etSlots);
         etDate = findViewById(R.id.etDate);
+        etDescription = findViewById(R.id.etDescription);
         etTime = findViewById(R.id.etTime);
         etLocation = findViewById(R.id.etLocation);
-        etDetails = findViewById(R.id.etDetails);
-        btnCreate = findViewById(R.id.btnCreate);
-        btnUpload = findViewById(R.id.btnUpload); // Optional image handling later
+        btnCreatePlan = findViewById(R.id.btnCreatePlan);
+        btnUpload = findViewById(R.id.btnUpload);
 
         // Show pickers
         etDate.setOnClickListener(v -> showDatePicker());
         etTime.setOnClickListener(v -> showTimePicker());
 
         // Submit
-        btnCreate.setOnClickListener(v -> createPlan());
+        btnCreatePlan.setOnClickListener(v -> createPlan());
+
+        btnUpload.setOnClickListener(v -> openGallery());
+        btnUpload.setOnLongClickListener(v -> {
+            imageUri = null;
+            btnUpload.setImageResource(R.drawable.ic_upload);
+            Toast.makeText(this, "Image removed!", Toast.LENGTH_SHORT).show();
+            return true;
+        });
     }
 
     private void showDatePicker() {
@@ -76,7 +104,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         String date = etDate.getText().toString().trim();
         String time = etTime.getText().toString().trim();
         String location = etLocation.getText().toString().trim();
-        String details = etDetails.getText().toString().trim();
+        String description = etDescription.getText().toString().trim();
 
         if (name.isEmpty() || slots.isEmpty() || date.isEmpty() || time.isEmpty()) {
             Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
@@ -87,7 +115,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         String imageUrl = "";  // Placeholder until image upload is implemented
         Map<String, Boolean> participants = new HashMap<>(); // For future tracking
 
-        Plan plan = new Plan(id, name, slots, date, time, location, details, imageUrl);
+        Plan plan = new Plan(id, name, slots, date, time, location, description, imageUrl);
         plan.participants = participants;
 
         databasePlans.child(id).setValue(plan)
@@ -97,5 +125,22 @@ public class CreatePlanActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e ->
                         Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            btnUpload.setImageURI(imageUri);
+            Toast.makeText(this, "Image selected!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -46,8 +46,13 @@ public class Event_Adapter extends RecyclerView.Adapter<Event_Adapter.EventViewH
         holder.userprofile.setImageResource(event.userprofileResId);
 
         // Button actions
-        holder.btnJoin.setOnClickListener(v ->
-        context.startActivity(new Intent(v.getContext(), EventDetailsActivity.class)));
+        holder.btnJoin.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), EventDetailsActivity.class);
+            intent.putExtra("hostUid", event.hostUid);
+            intent.putExtra("hostName", event.hostName);
+            // Add other extras as needed
+            v.getContext().startActivity(intent);
+        });
         holder.btnSkip.setOnClickListener(v ->
                 Toast.makeText(context, "Not Interested " + event.title, Toast.LENGTH_SHORT).show());
         holder.userprofile.setOnClickListener(v ->

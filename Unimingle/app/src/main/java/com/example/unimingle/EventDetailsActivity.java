@@ -86,8 +86,14 @@ public class EventDetailsActivity extends AppCompatActivity {
             chatRef.setValue(msgData).addOnSuccessListener(aVoid -> {
                 Toast.makeText(this, "Message sent to host!", Toast.LENGTH_SHORT).show();
                 joinBtn.setEnabled(true);
-                // Optionally navigate to ChatActivity
-                // startActivity(new Intent(this, ChatActivity.class));
+                // Open ChatActivity with host's info (e.g., Ketan)
+                Intent chatIntent = new Intent(this, ChatActivity.class);
+                chatIntent.putExtra("userId", hostUid);
+                String hostName = intent.getStringExtra("hostName");
+                if (hostName == null) hostName = "Host";
+                chatIntent.putExtra("userName", hostName);
+                startActivity(chatIntent);
+                finish();
             }).addOnFailureListener(e -> {
                 Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show();
                 joinBtn.setEnabled(true);
