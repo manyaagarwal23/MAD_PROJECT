@@ -38,12 +38,16 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Sample event data
-        String hostUid = "";
-        if (com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser() != null) {
-            hostUid = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();
-        }
+        // Initialize the event list
         eventList = new ArrayList<>();
+        
+        // Add a sample event (optional - you can remove this if you want to show only Firebase events)
+        String currentUserUid = "";
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        
+        // Add a sample event (you can remove this if you want to show only Firebase events)
         eventList.add(new Event_Model(
                 R.drawable.bpl,
                 "BPL 2",
@@ -53,10 +57,11 @@ public class HomeActivity extends AppCompatActivity {
                 3,
                 4,
                 R.drawable.userprofile,
-                hostUid, // hostUid is now the real UID
-                "Ketan" // hostName
+                currentUserUid,
+                "Ketan"
         ));
 
+        // Set up the adapter
         adapter = new Event_Adapter(this, eventList);
         recyclerView.setAdapter(adapter);
 
@@ -69,21 +74,92 @@ public class HomeActivity extends AppCompatActivity {
             String email = user.getEmail();
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("UserEmails");
             ref.child(user.getUid()).setValue(email);
-            // Optionally, also store the reverse mapping:
+            // Also store the reverse mapping:
             ref = FirebaseDatabase.getInstance().getReference("EmailToUid");
             ref.child(email.replace(".", ",")).setValue(user.getUid()); // Firebase keys can't have '.'
         }
 
-        String emailToFind = "user@example.com";
-        DatabaseReference refToFind = FirebaseDatabase.getInstance().getReference("EmailToUid");
-        refToFind.child(emailToFind.replace(".", ",")).addListenerForSingleValueEvent(new ValueEventListener() {
+        // Fetch plans from Firebase and add as event cards
+        DatabaseReference plansRef = FirebaseDatabase.getInstance().getReference("plans");
+        plansRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String uid = snapshot.getValue(String.class);
-                // Now you have the UID for this email
+                // Clear existing Firebase events but keep the sample event at index 0
+                while (eventList.size() > 1) {
+                    eventList.remove(1);
+                }
+                
+                // Log how many plans were found
+                Log.d("HomeActivity", "Found " + snapshot.getChildrenCount() + " plans in Firebase");
+                
+                // Add each plan from Firebase
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Plan plan = ds.getValue(Plan.class);
+                    if (plan != null) {
+                        Log.d("HomeActivity", "Processing plan: " + plan.name + " with ID: " + plan.id);
+                        
+                        // Parse slots (e.g., "3/4")
+                        int currentPeople = 0, totalPeople = 0;
+                        if (plan.slots != null && plan.slots.contains("/")) {
+                            String[] parts = plan.slots.split("/");
+                            try {
+                                currentPeople = Integer.parseInt(parts[0].trim());
+                                totalPeople = Integer.parseInt(parts[1].trim());
+                            } catch (Exception e) {
+                                Log.e("HomeActivity", "Error parsing slots: " + plan.slots, e);
+                            }
+                        }
+                        
+                        // Create event model from plan
+                        Event_Model event;
+                        if (plan.imageUrl != null && !plan.imageUrl.isEmpty()) {
+                            // Use the constructor with image URL
+                            event = new Event_Model(
+                                    plan.id,
+                                    plan.imageUrl,
+                                    plan.name,
+                                    plan.location,
+                                    plan.date,
+                                    plan.description,
+                                    currentPeople,
+                                    totalPeople,
+                                    R.drawable.userprofile,
+                                    plan.ownerUid != null ? plan.ownerUid : "",
+                                    "Host"
+                            );
+                        } else {
+                            // Use the constructor with default image resource
+                            event = new Event_Model(
+                                    plan.id,
+                                    R.drawable.bpl,
+                                    plan.name,
+                                    plan.location,
+                                    plan.date,
+                                    plan.description,
+                                    currentPeople,
+                                    totalPeople,
+                                    R.drawable.userprofile,
+                                    plan.ownerUid != null ? plan.ownerUid : "",
+                                    "Host"
+                            );
+                        }
+                        
+                        // Add the event to the list
+                        eventList.add(event);
+                        Log.d("HomeActivity", "Added event to list: " + event.title);
+                    }
+                }
+                
+                // Notify the adapter that data has changed
+                adapter.notifyDataSetChanged();
+                Log.d("HomeActivity", "Adapter notified with " + eventList.size() + " events");
             }
+            
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("HomeActivity", "Firebase error: " + error.getMessage());
+                Toast.makeText(HomeActivity.this, "Failed to load events: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

@@ -37,7 +37,19 @@ public class Event_Adapter extends RecyclerView.Adapter<Event_Adapter.EventViewH
         Event_Model event = eventList.get(position);
 
         // Bind event data to views
-        holder.eventImage.setImageResource(event.imageResId);
+        // Set image based on whether we have a URL or resource ID
+        if (event.imageUrl != null && !event.imageUrl.isEmpty()) {
+            // If we have a URL, we would use a library like Glide or Picasso to load it
+            // For now, we'll use the default image resource
+            holder.eventImage.setImageResource(event.imageResId);
+            
+            // Example of how to use Glide (you would need to add the dependency):
+            // Glide.with(context).load(event.imageUrl).placeholder(event.imageResId).into(holder.eventImage);
+        } else {
+            // Use the resource ID directly
+            holder.eventImage.setImageResource(event.imageResId);
+        }
+        
         holder.eventName.setText(event.title);
         holder.eventLocation.setText(event.location);
         holder.eventDate.setText(event.date);
@@ -50,15 +62,40 @@ public class Event_Adapter extends RecyclerView.Adapter<Event_Adapter.EventViewH
             Intent intent = new Intent(v.getContext(), EventDetailsActivity.class);
             intent.putExtra("hostUid", event.hostUid);
             intent.putExtra("hostName", event.hostName);
-            // Add other extras as needed
+            intent.putExtra("eventId", event.id);
+            intent.putExtra("eventTitle", event.title);
+            intent.putExtra("eventLocation", event.location);
+            intent.putExtra("eventDate", event.date);
+            intent.putExtra("eventDescription", event.description);
             v.getContext().startActivity(intent);
         });
-        holder.btnSkip.setOnClickListener(v ->
-                Toast.makeText(context, "Not Interested " + event.title, Toast.LENGTH_SHORT).show());
-        holder.userprofile.setOnClickListener(v ->
-                context.startActivity(new Intent(v.getContext(), ProfileActivity.class)));
-
-
+        
+        holder.btnSkip.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                Event_Model eventToRemove = eventList.get(pos);
+                // Remove from Firebase if it has an ownerUid and id
+                if (eventToRemove.hostUid != null && eventToRemove.id != null && !eventToRemove.id.isEmpty()) {
+                    com.google.firebase.database.DatabaseReference plansRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("plans");
+                    plansRef.child(eventToRemove.id).removeValue()
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(context, "Event removed from database", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(context, "Failed to remove: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+                }
+                eventList.remove(pos);
+                notifyItemRemoved(pos);
+                Toast.makeText(context, "Event removed from view", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        holder.userprofile.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), ProfileActivity.class);
+            intent.putExtra("userId", event.hostUid);
+            context.startActivity(intent);
+        });
     }
 
     @Override

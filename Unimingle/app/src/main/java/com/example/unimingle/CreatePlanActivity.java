@@ -114,8 +114,9 @@ public class CreatePlanActivity extends AppCompatActivity {
         String id = databasePlans.push().getKey();
         String imageUrl = "";  // Placeholder until image upload is implemented
         Map<String, Boolean> participants = new HashMap<>(); // For future tracking
+        String ownerUid = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        Plan plan = new Plan(id, name, slots, date, time, location, description, imageUrl);
+        Plan plan = new Plan(id, name, slots, date, time, location, description, imageUrl, ownerUid);
         plan.participants = participants;
 
         databasePlans.child(id).setValue(plan)
